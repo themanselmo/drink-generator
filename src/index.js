@@ -24,8 +24,16 @@ function renderDrink(drink) {
         return property[0].substring(0, 13) === 'strIngredient' && property[1] != null
     })
 
-    console.log(ingredientList)
-    ingredientList.forEach(renderIngredients)
+    ingredientList.forEach(element=>{
+        let newIngredient = document.createElement('li')
+        measurekey = 'strMeasure'+ element[0].substring(13)
+        if (drink[measurekey]===null) {
+            newIngredient.textContent = element[1]
+        } else{
+            newIngredient.textContent = drink[measurekey] + " " + element[1]
+        }
+        ingredients.append(newIngredient)
+    })
 
     instructions.textContent = drink.strInstructions
 }
@@ -33,7 +41,8 @@ function renderDrink(drink) {
 // reads given ingredient and creates a new li on the page
 function renderIngredients(ingredient) {
     let newIngredient = document.createElement('li')
-    newIngredient.textContent = ingredient[1]
+    measurekey = 'strMeasure'+ ingredient[0][-1]
+    newIngredient.textContent = drink.measurekey + " " + ingredient[1]
 
     ingredients.append(newIngredient)
 }
