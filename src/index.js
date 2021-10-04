@@ -26,6 +26,7 @@ function renderDrink(drink) {
         return property[0].substring(0, 13) === 'strIngredient' && property[1] != null
     })
 
+    ingredients.innerHTML = ''
     ingredientList.forEach(element=>renderIngredients(element,drink))
 
     instructions.textContent = drink.strInstructions
@@ -40,9 +41,13 @@ function renderIngredients(element, drink) {
         } else{
             newIngredient.textContent = drink[measurekey] + " " + element[1]
         }
+
+    
     ingredients.append(newIngredient)
 }
 
+// when the form is submitted, an api call is made to 
+// search for the provided drink name and displays the results
 searchForm.addEventListener('submit', (e)=>{
     e.preventDefault()
     searchList.innerHTML = ''
@@ -53,6 +58,7 @@ searchForm.addEventListener('submit', (e)=>{
         console.log(element.strDrink)
         const newli = document.createElement('li')
         newli.textContent = element.strDrink
+        newli.addEventListener('click', () => renderDrink(element))
         searchList.append(newli)
     }))
 })
