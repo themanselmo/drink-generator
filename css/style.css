@@ -1,0 +1,82 @@
+body {
+  background-color: rgba(120,25,25,0.85);
+  font-family: 'Sahitya', serif;
+}
+
+#title, #search-form, #results-container, #preview-container {
+  text-align: center;
+}
+
+#title {
+  font-size: 4.5rem;
+}
+
+#search-form {
+
+}
+#drink-search {
+  width: 21.5625rem;
+  height: 3.875rem;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 1.25rem;
+  padding: 0;
+}
+
+#search-button {
+  width: 8rem;
+  height: 4.25rem;
+  border-radius: 5px;
+}
+
+
+#results-container {
+  height: 15em;
+  width: 33%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  margin: 3.125rem auto;
+  border-radius: 5px;
+}
+
+#preview-container {
+  display: flex;
+  text-align: left;
+  background-color: #DFB1B1;
+  width: 50%;
+  height: 400px;
+  margin: auto;
+  border-radius: 2px;
+}
+
+#image-container {
+  display: relative;
+}
+#drink-image {
+  width: 400px;
+  height: 400px;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+  position: relative;
+}
+
+#drink-name {
+  margin-bottom: 10px;
+  position: absolute;
+  bottom: 60px;
+}
+
+#drink-info {
+  padding-left: 5.3125rem;
+  padding-right: 1rem;
+}
+
+#ingredients-container {
+  margin: 2rem 0
+}
+
+#instruction-container {
+  display: inline-block;
+  margin-top: 1rem;
+}
