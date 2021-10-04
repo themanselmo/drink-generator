@@ -4,6 +4,8 @@ const img = document.querySelector('#drink-image')
 const h3 = document.querySelector('#drink-name')
 const ingredients = document.querySelector('#ingredients-list')
 const instructions = document.querySelector('#instructions')
+const searchForm = document.querySelector('#search-form')
+const searchList = document.querySelector('#search-results')
 
 document.addEventListener('DOMContentLoaded', getRandom)
 
@@ -24,25 +26,33 @@ function renderDrink(drink) {
         return property[0].substring(0, 13) === 'strIngredient' && property[1] != null
     })
 
-    ingredientList.forEach(element=>{
-        let newIngredient = document.createElement('li')
-        measurekey = 'strMeasure'+ element[0].substring(13)
-        if (drink[measurekey]===null) {
-            newIngredient.textContent = element[1]
-        } else{
-            newIngredient.textContent = drink[measurekey] + " " + element[1]
-        }
-        ingredients.append(newIngredient)
-    })
+    ingredientList.forEach(element=>renderIngredients(element,drink))
 
     instructions.textContent = drink.strInstructions
 }
 
 // reads given ingredient and creates a new li on the page
-function renderIngredients(ingredient) {
+function renderIngredients(element, drink) {
     let newIngredient = document.createElement('li')
-    measurekey = 'strMeasure'+ ingredient[0][-1]
-    newIngredient.textContent = drink.measurekey + " " + ingredient[1]
-
+    measurekey = 'strMeasure'+ element[0].substring(13)
+        if (drink[measurekey]===null) {
+            newIngredient.textContent = element[1]
+        } else{
+            newIngredient.textContent = drink[measurekey] + " " + element[1]
+        }
     ingredients.append(newIngredient)
 }
+
+searchForm.addEventListener('submit', (e)=>{
+    e.preventDefault()
+    searchList.innerHTML = ''
+    searchTerm = document.querySelector('#drink-search').value
+    console.log(searchTerm)
+    const searchURL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + searchTerm
+    fetch(searchURL).then(resp=>resp.json()).then(json=>json.drinks.forEach(element=>{
+        console.log(element.strDrink)
+        const newli = document.createElement('li')
+        newli.textContent = element.strDrink
+        searchList.append(newli)
+    }))
+})
