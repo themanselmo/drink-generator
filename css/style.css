@@ -79,6 +79,12 @@ body {
   background: linear-gradient(to right, white, rgba(255,0,0,0));
 }
 
+#image-container button {
+  position: relative;
+  bottom: 480px;
+  margin-left: 5px;
+}
+
 #drink-info {
   padding-left: 5.3125rem;
   padding-right: 3rem;

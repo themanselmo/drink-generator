@@ -8,6 +8,7 @@ const searchForm = document.querySelector('#search-form')
 const resultContainer = document.getElementById('results-container')
 const nameSearchSelector = document.getElementById('searchByName')
 const ingredientSearchSelector = document.getElementById('searchByIngredient')
+const addFav = document.querySelector('#add_fav')
 
 
 document.addEventListener('DOMContentLoaded', getRandom)
@@ -44,7 +45,6 @@ function renderIngredients(element, drink) {
         } else{
             newIngredient.textContent = drink[measurekey] + " " + element[1]
         }
-
     
     ingredients.append(newIngredient)
 }
@@ -61,21 +61,22 @@ function searchDrink(value) {
     }
 }
 
+function renderSearch(drink) {
+    const newDiv = document.createElement('div')
+    const newImg = document.createElement('img')
+    const newName = document.createElement('h5')
+    const imgURL = drink.strDrinkThumb + '/preview'
+    newImg.src = imgURL
+    newName.textContent = drink.strDrink
+    newDiv.append(newImg)
+    newDiv.append(newName)
+    resultContainer.append(newDiv)
+    newDiv.addEventListener('click', () => renderDrink(drink))
+}
+
 function searchByName(name) {
     const searchURL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + name
-    fetch(searchURL).then(resp=>resp.json()).then(json=>json.drinks.forEach(element=>{
-        const newDiv = document.createElement('div')
-        const newImg = document.createElement('img')
-        const newName = document.createElement('h5')
-        const imgURL = element.strDrinkThumb + '/preview'
-        newImg.src = imgURL
-        newName.textContent = element.strDrink
-        newDiv.append(newImg)
-        newDiv.append(newName)
-        console.log(newName)
-        resultContainer.append(newDiv)
-        newDiv.addEventListener('click', () => renderDrink(element))
-    }))
+    fetch(searchURL).then(resp=>resp.json()).then(json=>json.drinks.forEach(element=>renderSearch(element)))
 }
 
 function searchByIngredient(ingredient) {
@@ -85,7 +86,6 @@ function searchByIngredient(ingredient) {
     } else {
         const searchURL = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=' + ingredient
         fetch(searchURL).then(resp=>resp.json()).then(json=>json.drinks.forEach(element=>{
-            console.log(element.strDrink)
             searchByName(element.strDrink)
     }))
     }
@@ -102,3 +102,28 @@ searchForm.addEventListener('submit', (e)=>{
     console.log(searchTerm)
     searchDrink(searchTerm)
 })
+
+document.addEventListener('DOMContentLoaded', getFav)
+
+// gets a random drink using a fetch request to the drinks api
+function getFav() {
+    fetch('http://localhost:3000/favorites').then(resp=>resp.json()).then(data=>data.forEach(element=>renderSearch(element)))
+}
+
+addFav.addEventListener('click', addFavFunc)
+
+function addFavFunc() {
+    const new_fav = {}
+    const curr_drink = document.querySelector('#drink-name').textContent
+    const curr_img = document.querySelector('#drink-image').src
+    new_fav.strDrink = curr_drink
+    new_fav.strDrinkThumb = curr_img
+    fetch('http://localhost:3000/favorites', {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(new_fav)
+    }).then(resp=>resp.json())
+}
