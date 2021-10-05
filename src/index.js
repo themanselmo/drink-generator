@@ -79,11 +79,17 @@ function searchByName(name) {
 }
 
 function searchByIngredient(ingredient) {
-    const searchURL = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=' + ingredient
-    fetch(searchURL).then(resp=>resp.json()).then(json=>json.drinks.forEach(element=>{
-        console.log(element.strDrink)
-        searchByName(element.strDrink)
+    if(ingredient === '' || ingredient == null) {
+        alert('Please enter an ingredient!') 
+        
+    } else {
+        const searchURL = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=' + ingredient
+        fetch(searchURL).then(resp=>resp.json()).then(json=>json.drinks.forEach(element=>{
+            console.log(element.strDrink)
+            searchByName(element.strDrink)
     }))
+    }
+    
 }
 
 // when the form is submitted, an api call is made to 
