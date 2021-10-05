@@ -66,6 +66,6 @@ searchForm.addEventListener('submit', (e)=>{
         newDiv.append(newName)
         console.log(newName)
         resultContainer.append(newDiv)
-        newName.addEventListener('click', () => renderDrink(element))
+        newDiv.addEventListener('click', () => renderDrink(element))
     }))
 })
