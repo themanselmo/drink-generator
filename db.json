@@ -24,6 +24,11 @@
       "strDrink": "Tuxedo Cocktail",
       "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/4u0nbl1504352551.jpg",
       "id": 5
+    },
+    {
+      "strDrink": "Bloody Mary",
+      "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/t6caa21582485702.jpg",
+      "id": 6
     }
   ]
 }
