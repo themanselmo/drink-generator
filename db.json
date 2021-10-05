@@ -9,6 +9,21 @@
       "strDrink": "Blue Margarita",
       "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/bry4qh1582751040.jpg",
       "id": 2
+    },
+    {
+      "strDrink": "Sweet Sangria",
+      "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/uqqvsp1468924228.jpg",
+      "id": 3
+    },
+    {
+      "strDrink": "Royal Bitch",
+      "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/qupuyr1441210090.jpg",
+      "id": 4
+    },
+    {
+      "strDrink": "Tuxedo Cocktail",
+      "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/4u0nbl1504352551.jpg",
+      "id": 5
     }
   ]
 }

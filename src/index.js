@@ -9,6 +9,7 @@ const resultContainer = document.getElementById('results-container')
 const nameSearchSelector = document.getElementById('searchByName')
 const ingredientSearchSelector = document.getElementById('searchByIngredient')
 const addFav = document.querySelector('#add_fav')
+const showFav = document.querySelector('#show-favs')
 
 
 document.addEventListener('DOMContentLoaded', getRandom)
@@ -107,6 +108,7 @@ document.addEventListener('DOMContentLoaded', getFav)
 
 // gets a random drink using a fetch request to the drinks api
 function getFav() {
+    resultContainer.innerHTML = ''
     fetch('http://localhost:3000/favorites').then(resp=>resp.json()).then(data=>data.forEach(element=>searchByName(element.strDrink)))
 }
 
@@ -128,4 +130,7 @@ function addFavFunc() {
     }).then(resp=>resp.json())
     .then(console.log)
     .catch(error => console.log('error:' + error))
+    getFav()
 }
+
+showFav.addEventListener('click', getFav)

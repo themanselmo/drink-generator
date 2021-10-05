@@ -59,6 +59,7 @@ body {
   border-radius: 2px;
 }
 
+/* resize the image proportionally to the size of the browser, but also stay filled with preview container height */
 #image-container {
   display: relative;
 }
@@ -103,4 +104,6 @@ body {
   overflow: auto;
 }
   
-
+#show-favs-div {
+  text-align: center;
+}
