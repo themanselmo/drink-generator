@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', getFav)
 
 // gets a random drink using a fetch request to the drinks api
 function getFav() {
-    fetch('http://localhost:3000/favorites').then(resp=>resp.json()).then(data=>data.forEach(element=>renderSearch(element)))
+    fetch('http://localhost:3000/favorites').then(resp=>resp.json()).then(data=>data.forEach(element=>searchByName(element.strDrink)))
 }
 
 addFav.addEventListener('click', addFavFunc)
@@ -126,4 +126,6 @@ function addFavFunc() {
         },
         body: JSON.stringify(new_fav)
     }).then(resp=>resp.json())
+    .then(console.log)
+    .catch(error => console.log('error:' + error))
 }

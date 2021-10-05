@@ -1,8 +1,14 @@
 {
-    "favorites": [
+  "favorites": [
     {
-        "strDrink": "Margarita",
-        "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/5noda61589575158.jpg"
+      "strDrink": "Absolut Summertime",
+      "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/trpxxs1472669662.jpg",
+      "id": 1
+    },
+    {
+      "strDrink": "Blue Margarita",
+      "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/bry4qh1582751040.jpg",
+      "id": 2
     }
-    ]
+  ]
 }
