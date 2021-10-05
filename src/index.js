@@ -6,6 +6,8 @@ const ingredients = document.querySelector('#ingredients-list')
 const instructions = document.querySelector('#instructions')
 const searchForm = document.querySelector('#search-form')
 const searchList = document.querySelector('#search-results')
+const nameSearchSelector = document.getElementById('searchByName')
+const ingredientSearchSelector = document.getElementById('searchByIngredient')
 
 document.addEventListener('DOMContentLoaded', getRandom)
 
@@ -46,14 +48,20 @@ function renderIngredients(element, drink) {
     ingredients.append(newIngredient)
 }
 
-// when the form is submitted, an api call is made to 
-// search for the provided drink name and displays the results
-searchForm.addEventListener('submit', (e)=>{
-    e.preventDefault()
-    searchList.innerHTML = ''
-    searchTerm = document.querySelector('#drink-search').value
-    console.log(searchTerm)
-    const searchURL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + searchTerm
+function searchDrink(value) {
+    if(!nameSearchSelector.checked && !ingredientSearchSelector.checked) {
+        alert('Please select a search method!')
+    }
+    else if(ingredientSearchSelector.checked) {
+        searchByIngredient(value)
+    }
+    else if(nameSearchSelector.checked) {
+        searchByName(value)
+    }
+}
+
+function searchByName(name) {
+    const searchURL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + name
     fetch(searchURL).then(resp=>resp.json()).then(json=>json.drinks.forEach(element=>{
         console.log(element.strDrink)
         const newli = document.createElement('li')
@@ -61,4 +69,23 @@ searchForm.addEventListener('submit', (e)=>{
         newli.addEventListener('click', () => renderDrink(element))
         searchList.append(newli)
     }))
+}
+
+function searchByIngredient(ingredient) {
+    const searchURL = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=' + ingredient
+    fetch(searchURL).then(resp=>resp.json()).then(json=>json.drinks.forEach(element=>{
+        console.log(element.strDrink)
+        searchByName(element.strDrink)
+    }))
+}
+
+// when the form is submitted, an api call is made to 
+// search for the provided drink name and displays the results
+searchForm.addEventListener('submit', (e)=>{
+    e.preventDefault()
+    console.log(e)
+    searchList.innerHTML = ''
+    searchTerm = document.querySelector('#drink-search').value
+    console.log(searchTerm)
+    searchDrink(searchTerm)
 })
