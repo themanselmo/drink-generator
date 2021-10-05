@@ -5,9 +5,10 @@ const h3 = document.querySelector('#drink-name')
 const ingredients = document.querySelector('#ingredients-list')
 const instructions = document.querySelector('#instructions')
 const searchForm = document.querySelector('#search-form')
-const searchList = document.querySelector('#search-results')
+const resultContainer = document.getElementById('results-container')
 const nameSearchSelector = document.getElementById('searchByName')
 const ingredientSearchSelector = document.getElementById('searchByIngredient')
+
 
 document.addEventListener('DOMContentLoaded', getRandom)
 
@@ -63,11 +64,17 @@ function searchDrink(value) {
 function searchByName(name) {
     const searchURL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + name
     fetch(searchURL).then(resp=>resp.json()).then(json=>json.drinks.forEach(element=>{
-        console.log(element.strDrink)
-        const newli = document.createElement('li')
-        newli.textContent = element.strDrink
-        newli.addEventListener('click', () => renderDrink(element))
-        searchList.append(newli)
+        const newDiv = document.createElement('div')
+        const newImg = document.createElement('img')
+        const newName = document.createElement('h5')
+        const imgURL = element.strDrinkThumb + '/preview'
+        newImg.src = imgURL
+        newName.textContent = element.strDrink
+        newDiv.append(newImg)
+        newDiv.append(newName)
+        console.log(newName)
+        resultContainer.append(newDiv)
+        newDiv.addEventListener('click', () => renderDrink(element))
     }))
 }
 
@@ -84,7 +91,7 @@ function searchByIngredient(ingredient) {
 searchForm.addEventListener('submit', (e)=>{
     e.preventDefault()
     console.log(e)
-    searchList.innerHTML = ''
+    resultContainer.innerHTML = ''
     searchTerm = document.querySelector('#drink-search').value
     console.log(searchTerm)
     searchDrink(searchTerm)

@@ -32,14 +32,21 @@ body {
 
 
 #results-container {
-  height: 15em;
-  width: 33%;
-  background-color: white;
+  width: 70%;
   display: flex;
   justify-content: center;
   margin: 3.125rem auto;
   border-radius: 5px;
   overflow: auto;
+}
+
+#results-container img {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#results-container h5 {
+  margin-top: 0;
 }
 
 #preview-container {
@@ -64,9 +71,9 @@ body {
 }
 
 #drink-name {
-  margin-bottom: 5px;
-  position: absolute;
-  bottom: 5px;
+  margin-bottom: 30px;
+  position: relative;
+  bottom: 75px;
   padding-left: 5px;
   padding-right: 7px;
   background: linear-gradient(to right, white, rgba(255,0,0,0));
@@ -74,16 +81,20 @@ body {
 
 #drink-info {
   padding-left: 5.3125rem;
-  padding-right: 1rem;
+  padding-right: 3rem;
 }
 
 #ingredients-container {
-  margin: 2rem 0;
-  
+  margin: 1rem 0;
+  height: 100px;
+  overflow: auto;
 }
 
 #instruction-container {
   display: inline-block;
   margin-top: 1rem;
-  
+  height: 200px;
+  overflow: auto;
 }
+  
+
