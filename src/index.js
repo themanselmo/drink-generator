@@ -10,7 +10,7 @@ const nameSearchSelector = document.getElementById('searchByName')
 const ingredientSearchSelector = document.getElementById('searchByIngredient')
 const addFav = document.querySelector('#add_fav')
 const showFav = document.querySelector('#show-favs')
-
+let favorites = []
 
 document.addEventListener('DOMContentLoaded', getRandom)
 
@@ -64,6 +64,7 @@ function searchDrink(value) {
 
 function renderSearch(drink) {
     const newDiv = document.createElement('div')
+    newDiv.id = drink.strDrink
     const newImg = document.createElement('img')
     const newName = document.createElement('h5')
     const imgURL = drink.strDrinkThumb + '/preview'
@@ -118,19 +119,44 @@ function addFavFunc() {
     const new_fav = {}
     const curr_drink = document.querySelector('#drink-name').textContent
     const curr_img = document.querySelector('#drink-image').src
-    new_fav.strDrink = curr_drink
-    new_fav.strDrinkThumb = curr_img
-    fetch('http://localhost:3000/favorites', {
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify(new_fav)
-    }).then(resp=>resp.json())
-    .then(console.log)
-    .catch(error => console.log('error:' + error))
+
+    if(checkExistingFav(curr_drink).length == 1) {
+        alert('Drink is already favorited!')
+    } else {
+        new_fav.strDrink = curr_drink
+        new_fav.strDrinkThumb = curr_img
+        fetch('http://localhost:3000/favorites', {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(new_fav)
+        }).then(resp=>resp.json())
+        .then(console.log)
+        .catch(error => console.log('error:' + error))
+    }
     getFav()
 }
 
+function fetchFavorites() {
+    fetch('http://localhost:3000/favorites')
+    .then(res => res.json())
+    .then(drinks => drinks.forEach((drink) => {
+        favorites.push(drink.strDrink)
+    }))
+}
+
+
+function checkExistingFav(drinkName) {
+    if(document.getElementById(drinkName) != null){
+        return true
+    } else {
+        return false
+    }
+}
+
+console.log(document.getElementById('Blue Margarita'))
+
+console.log(checkExistingFav('H.D.'))
 showFav.addEventListener('click', getFav)
