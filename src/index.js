@@ -120,9 +120,7 @@ function addFavFunc() {
     const curr_drink = document.querySelector('#drink-name').textContent
     const curr_img = document.querySelector('#drink-image').src
 
-    if(checkExistingFav(curr_drink).length == 1) {
-        alert('Drink is already favorited!')
-    } else {
+    // add check to see if a repeat favorite is trying to be added
         new_fav.strDrink = curr_drink
         new_fav.strDrinkThumb = curr_img
         fetch('http://localhost:3000/favorites', {
@@ -135,7 +133,7 @@ function addFavFunc() {
         }).then(resp=>resp.json())
         .then(console.log)
         .catch(error => console.log('error:' + error))
-    }
+    
     getFav()
 }
 
