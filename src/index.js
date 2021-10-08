@@ -19,6 +19,10 @@ function getRandom() {
     }))
 }
 
+// loads a random drink on page load
+document.addEventListener('DOMContentLoaded', getRandom)
+
+
 // reads given drink and displays it on the page
 function renderDrink(drink) {
     img.src = drink.strDrinkThumb
