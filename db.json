@@ -1,5 +1,24 @@
 {
   "favorites": [
- 
+    {
+      "strDrink": "Masala Chai",
+      "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/uyrpww1441246384.jpg",
+      "id": 1
+    },
+    {
+      "strDrink": "Vodka Martini",
+      "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/qyxrqw1439906528.jpg",
+      "id": 2
+    },
+    {
+      "strDrink": "Rum Milk Punch",
+      "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/w64lqm1504888810.jpg",
+      "id": 3
+    },
+    {
+      "strDrink": "Frosé",
+      "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/b4cadp1619695347.jpg",
+      "id": 4
+    }
   ]
 }
