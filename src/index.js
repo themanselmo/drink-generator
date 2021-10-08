@@ -12,8 +12,6 @@ const addFav = document.querySelector('#add_fav')
 const showFav = document.querySelector('#show-favs')
 let favorites = []
 
-document.addEventListener('DOMContentLoaded', getRandom)
-
 // gets a random drink using a fetch request to the drinks api
 function getRandom() {
     fetch(randomURL).then(resp=>resp.json()).then(data=>data.drinks.forEach(element => {
@@ -50,18 +48,7 @@ function renderIngredients(element, drink) {
     ingredients.append(newIngredient)
 }
 
-function searchDrink(value) {
-    if(!nameSearchSelector.checked && !ingredientSearchSelector.checked) {
-        alert('Please select a search method!')
-    }
-    else if(ingredientSearchSelector.checked) {
-        searchByIngredient(value)
-    }
-    else if(nameSearchSelector.checked) {
-        searchByName(value)
-    }
-}
-
+// renders a drink element to display on the page
 function renderSearch(drink) {
     const newDiv = document.createElement('div')
     newDiv.id = drink.strDrink
@@ -76,11 +63,43 @@ function renderSearch(drink) {
     newDiv.addEventListener('click', () => renderDrink(drink))
 }
 
+// searches for a drink by a method determined by which radio button is selected
+function searchDrink(value) {
+    if(!nameSearchSelector.checked && !ingredientSearchSelector.checked) {
+        alert('Please select a search method!')
+    }
+    else if(ingredientSearchSelector.checked) {
+        searchByIngredient(value)
+    }
+    else if(nameSearchSelector.checked) {
+        searchByName(value)
+    }
+}
+
+// searches for a drink by its name, returns a list of drinks
+// with similar names
 function searchByName(name) {
     const searchURL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + name
     fetch(searchURL).then(resp=>resp.json()).then(json=>json.drinks.forEach(element=>renderSearch(element)))
 }
 
+// returns one drink strictly matching the given name
+function strictSearchByName(name) {
+    const searchURL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + name
+        fetch(searchURL)
+        .then(resp=>resp.json())
+        .then(favorites=> {
+            console.log(name)
+            console.log(favorites)
+            let strictDrink = favorites.drinks.filter(drink => drink.strDrink === name)
+            // let drink = json.drinks.filter(drink.strDrink === name)
+            console.log(strictDrink)
+            renderSearch(strictDrink[0])
+        })
+
+}
+
+// returns a list of drinks that have the given ingredient in them
 function searchByIngredient(ingredient) {
     if(ingredient === '' || ingredient == null) {
         alert('Please enter an ingredient!') 
@@ -94,7 +113,8 @@ function searchByIngredient(ingredient) {
     
 }
 
-// when the form is submitted, an api call is made to 
+// First Event Listener
+// When the form is submitted, an api call is made to 
 // search for the provided drink name and displays the results
 searchForm.addEventListener('submit', (e)=>{
     e.preventDefault()
@@ -105,16 +125,22 @@ searchForm.addEventListener('submit', (e)=>{
     searchDrink(searchTerm)
 })
 
+// Second Event Listener
+// Event listener placed on the document calls getFav to load favorite drinks
+// on page load 
 document.addEventListener('DOMContentLoaded', getFav)
 
 // gets a random drink using a fetch request to the drinks api
 function getFav() {
     resultContainer.innerHTML = ''
-    fetch('http://localhost:3000/favorites').then(resp=>resp.json()).then(data=>data.forEach(element=>searchByName(element.strDrink)))
+    fetch('http://localhost:3000/favorites').then(resp=>resp.json()).then(data=>data.forEach(element=>strictSearchByName(element.strDrink)))
 }
 
+// Third Event Listener
+// Gives functionality to the addFav button 
 addFav.addEventListener('click', addFavFunc)
 
+// adds selected drink to the favorites list in the db
 function addFavFunc() {
     const new_fav = {}
     const curr_drink = document.querySelector('#drink-name').textContent
@@ -131,12 +157,11 @@ function addFavFunc() {
             },
             body: JSON.stringify(new_fav)
         }).then(resp=>resp.json())
-        .then(console.log)
+        .then(getFav)
         .catch(error => console.log('error:' + error))
-    
-    getFav()
 }
 
+// returns the array of favorite drinks from the db
 function fetchFavorites() {
     fetch('http://localhost:3000/favorites')
     .then(res => res.json())
@@ -145,16 +170,6 @@ function fetchFavorites() {
     }))
 }
 
-
-function checkExistingFav(drinkName) {
-    if(document.getElementById(drinkName) != null){
-        return true
-    } else {
-        return false
-    }
-}
-
-console.log(document.getElementById('Blue Margarita'))
-
-console.log(checkExistingFav('H.D.'))
+// Fourth Event Listener
+// Adds functionality to Button to display favorites when clicked
 showFav.addEventListener('click', getFav)
